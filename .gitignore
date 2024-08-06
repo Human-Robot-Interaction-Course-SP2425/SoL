@@ -1,6 +1,6 @@
 .env
-/.idea/*/*
-/.vscode/*/*
+.idea/*
+.vscode/*
 test.wav
 speech.mp3
 __pycache__
