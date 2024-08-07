@@ -6,7 +6,7 @@ import wave
 from openai import OpenAI
 from pathlib import Path
 import time
-import vlc
+from pygame import mixer
 import os
 from dotenv import load_dotenv
 
@@ -144,12 +144,17 @@ class ChatBot:
 
         response.stream_to_file(speech_file_path)
 
-        p = vlc.MediaPlayer("speech.mp3")
-        p.play()
-        time.sleep(1)
-        while p.is_playing():  # wait for speed to finish playing
+        mixer.init()
+        mixer.music.load("speech.mp3")
+        mixer.music.play()
+        while mixer.music.get_busy():
             time.sleep(1)
-        p.stop()
+        mixer.music.stop()
+        mixer.quit()
+
+        os.remove("speech.mp3")
+
+
         return "speech.mp3"
 
     def run_pipline(self, speech2text_model="whisper-1", chat_model="gpt-4o-mini", text2speech_model="tts-1",
@@ -181,7 +186,7 @@ if __name__ == '__main__':
 
     # list all audio devices
     list_audio_devices()
-    MIC_INDEX = 5 # run list_audio_devices() to choose which mic to use
+    MIC_INDEX = 6 # run list_audio_devices() to choose which mic to use
 
     # input selected audio device index
     cb = ChatBot(mic_index=MIC_INDEX)
@@ -195,3 +200,4 @@ if __name__ == '__main__':
     # print result
     print("\n---convo log:---")
     print(transcribed_text, response, old_convo)
+

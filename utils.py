@@ -34,7 +34,7 @@ def list_camera_ports():
             w = camera.get(3)
             h = camera.get(4)
             if is_reading:
-                print("Port %s is working and reads images (%s x %s)" % (dev_port, h, w))
+                print("[%s]\t Port is working and reads images (%s x %s)" % (dev_port, h, w))
                 working_ports.append(dev_port)
                 print("camera running at: ", camera.get(cv2.CAP_PROP_FPS))  # TODO: might break
             else:
