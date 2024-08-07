@@ -8,42 +8,18 @@ Here are two examples of Blossom robots:
 
 **For any questions (assembly or software related), [please check/make public issues](https://github.com/hrc2/blossom-public/issues).**
 
-## How to Cite
 
-If you use this repository or any of its content, please cite it as follows:
-
-Michael Suguitan and Guy Hoffman. 2019. Blossom: A Handcrafted Open-Source Robot. _J. Hum.-Robot Interact. 8_, 1, Article 2 (March 2019), 27 pages. https://doi.org/10.1145/3310356
-
-
-Bibtex:
-```
-@article{suguitan2019blossom,
-author = {Suguitan, Michael and Hoffman, Guy},
-title = {Blossom: A Handcrafted Open-Source Robot},
-year = {2019},
-issue_date = {March 2019},
-publisher = {Association for Computing Machinery},
-address = {New York, NY, USA},
-volume = {8},
-number = {1},
-doi = {10.1145/3310356},
-journal = {J. Hum.-Robot Interact.},
-month = {mar},
-articleno = {2},
-numpages = {27},
-keywords = {craft, social robotics, toolkit, handcrafted, robot toolkit, craft robotics, 
-            research platform, open-source, Robot design, soft robotics}
-}
-```
 
 ----
 
 # Blossom How-To
 
+### [original CMU wiki](https://github.com/hrc2/blossom-public/wiki)
+
 ## Get repo
 In a terminal, clone this repo
 ```
-git clone https://github.com/hrc2/blossom-public/
+git clone https://github.com/agmui/blossom-public.git
 ```
 
 ## Setup Software Dependencies
@@ -108,8 +84,16 @@ _Installation will take longer on a Raspberry Pi, and you may need additional de
 sudo apt-get install xvfb
 ```
 
+_If you want to use the chatbot you will need to create a .env file with the API key:_
+```env
+OPENAI_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+```
+_if you are taking a class at RHIT ask Dr. Berry for the API key_
+> **NOTE:** DO NOT SHARE THE API KEY OR PUSH THE `.env` FILE
 
 ## Building Blossom
+
+[3D print files]()
 
 To build your own Blossom, check out the [Build Guide](https://github.com/hrc2/blossom-public/wiki). The rest of this document will teach you how to set up the software to run the robot.
 
@@ -119,12 +103,64 @@ To build your own Blossom, check out the [Build Guide](https://github.com/hrc2/b
 
 ## Running Blossom 
 
+### Gesture recogniser
+
+first run 
+```python
+from utils import list_camera_ports
+from chatbot_pipline import list_audio_devices
+
+list_camera_ports()
+list_audio_devices()
+```
+to get the camera and mic you want to use for the gesture recogniser and chatbot
+
+then set:
+```python
+CAMERA_INDEX = 
+MIC_INDEX =  
+```
+in `main.py` to what you choose
+
+
+then run:
+```bash
+python main.py
+```
+> _Error:_ could not open port.
+> 
+> You may need to run `sudo chmod 777 <the name of the port>.`
+>
+> Ex: `sudo chmod 777 /dev/ttyACM0`
+
+a window should pop up running the gesture recogniser
+
+#### Project files
+* main.py
+  * the entry point to the gesture recogniser program
+  * the function `on_detection()` is where most of you code should go
+    it gets called anytime a gesture gets recognised
+* utils.py
+  * helpful functions for starting the robot and gesture recogniser
+  * use the function `list_camera_ports()` to get which camera port OpenCV will use
+* chatbot_pipline.py
+  * chatGPT chatbot pipeline
+  * to run: `python chatbot_pipeline.py` for a demo
+  * use the function `list_audio_devices()` to get which mic you will use
+  * it will generate speech.mp3 and test.wav everytime it is run. It is used
+    to comunicate with the openAI API
+* motor_calib.py
+  * used for calibrating the motors when initially building the robot
+* start.py
+  * class that holds all the robot code
+
+
 ### CLI
 To start the CLI, plug Blossom in and run
-```
+```bash
 python start.py 
 ```
-_Error: could not open port. You may need to run `sudo chmod 777 <the name of the port>.` 
+_Error:_ could not open port. You may need to run `sudo chmod 777 <the name of the port>.` 
 Ex: `sudo chmod 777 /dev/ttyACM0`
 
 
@@ -146,54 +182,6 @@ Available commands:
 - To perform an idler (looped gesture), enter two sequence names separated by `=`, e.g. `s` -> Enter -> `yes=no` (play `yes` then loop `no` indefinitely until another sequence is played).  
 - `q`: quit
 
-## Interfaces
+## [Blossom Arduino](blossom_arduino)
 
-The startup prompt will say 
-    
-    +-------------------+
-    |     IP ADDRESS    |
-    +-------------------+
-    | 10.132.3.171:8000 |
-    +-------------------+
-
-The IP address in this case is `10.132.3.171`. **Your IP address will be different from 10.132.3.171**
-
-### GUI
-The GUI _should_ be accessible via `localhost:8000` or `*IP address:8000` after starting up the CLI if `-b` was **not** specified. Otherwise, the CLI should print a message stating the server url.
-
-### Mobile app
-
-**Installation**
-
-Detailed instructions are available in [BlossomApp](https://github.com/hrc2/blossom-public/tree/master/BlossomApp)
-
-**Controlling the robot**
-
-This allows you to control the robot's orientation (pitch, yaw, roll) by moving the phone and use sliders for the height.
-
-Enter the IP address into the `Host` field and toggle `Control robot`. By default, the robot will copy the phone's orientation identically, i.e. the robot should be facing _away_ from you. To control the robot as it's facing you, toggle `Mirror` to be `On` and the robot will gaze at the top end of the phone (like a cat looking at a laser pointer, emitting from the top of the phone).
-
-### Build reactions to videos
-
-Open a new terminal and the video editor by typing: `xdg-open blossom_blockly/index.html` (Ubuntu) or `open blossom_blockly/index.html` (Mac), then hit “Enter.” The video editor should open in a new browser or tab.
-
-Type in the IP address into the editor and press `Update IP Address`.
-
-To update the video, paste the URL into the field and click `Update Video`.  
-_Some videos have restrictions and cannot play._
-
-**Choreograph**  
-In the left side of the video editor screen, use a Gesture block and input the starting time and gesture name.  
-
-Blocks must be connected to the initial block together for them to trigger gestures.   
-You can create new gestures with the __mobile app__ and use them in the editor video with `Reload Gestures`.
-
-Check `Loop` box to repeat the movement indefinitely until the next gesture. 
-
-Adjust the playback speed, exaggeration (amplitude) and posture (lean forwards/backwards): 
-
- 	-Choose and Adjustment block and add it to the gesture blocks in the "Adjustments" part  
-	-Enter the multiplier in the “multiply by” block.  
-	-Connect the multiplier block to the Adjustment block  
-	-Only one adjustment can be used at a time.  
-
+Arduino Giga R1 implementation using the Dynamixel shield for blossom

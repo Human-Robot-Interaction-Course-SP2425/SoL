@@ -1,24 +1,33 @@
 from utils import *
+from chatbot_pipline import *
+
+CAMERA_INDEX =   # run list_camera_ports() to choose which camera to use
+MIC_INDEX =   # run list_audio_devices() to choose which mic to use
 
 model_path = 'models/gesture_recognizer.task'
 
 hand_to_seq = {
-    "Open_Palm": "sad",
-    "Closed_Fist": "reset",
+    "Open_Palm": "reset",
+    "Closed_Fist": "sad",
     "Pointing_Up": "no",
     "Thumb_Up": "happy",
     "Thumb_Down": "fear"
 }
 
+
 # this function runs every time the model detects a gesture
 def on_detection(result: GestureRecognizerResult, output_image: mp.Image, timestamp_ms: int):
-    # result object format:
+    # GestureRecognizerResult format:
     # https://ai.google.dev/edge/mediapipe/solutions/vision/gesture_recognizer/python#handle_and_display_results
-    gesture_name = result.gestures[0][0].category_name
-    if gesture_name in hand_to_seq:
-        print("gesture:", gesture_name, "-> running:", hand_to_seq[gesture_name])
-        run_seq(hand_to_seq[gesture_name])
 
+    # getting the detected gesture name
+    gesture_name = result.gestures[0][0].category_name
+
+    if gesture_name in hand_to_seq:  #checking if the gesture name is in the dict
+        print("gesture:", gesture_name, "-> running:", hand_to_seq[gesture_name])
+        run_seq(hand_to_seq[gesture_name])  # running the corresponding sequence
+
+    # displays handtracking
     visualizer(result, output_image)
 
     # if you want to add your own custom overlay
@@ -26,11 +35,11 @@ def on_detection(result: GestureRecognizerResult, output_image: mp.Image, timest
 
 
 def main():
-    init_robot()  #TODO: better err msg if robot is plugged in
+    init_robot()
     init_model(model_path, on_detection)
 
     # For webcam input:
-    vid = cv2.VideoCapture(0)
+    vid = cv2.VideoCapture(CAMERA_INDEX)
     # creating recognizer object
     with GestureRecognizer.create_from_options(model.options) as recognizer:
         # start the camera for recording

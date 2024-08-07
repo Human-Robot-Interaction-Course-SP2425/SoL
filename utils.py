@@ -10,9 +10,15 @@ from mediapipe.framework.formats import landmark_pb2
 import start
 
 
-def list_ports():
+def list_camera_ports():
     """
-    Test the ports and returns a tuple with the available ports and the ones that are working.
+    Test camera the ports and returns a tuple with the available ports and the ones that are working.
+
+    can be used to find out what number to put in here
+    |
+    |
+    v
+    cv2.VideoCapture(0)
     """
     non_working_ports = []
     dev_port = 0
@@ -46,9 +52,9 @@ VisionRunningMode = mp.tasks.vision.RunningMode
 
 
 class BlossomRobot:
-    options = None
-    out_frame = np.array([])  # FIXME:
-    timer = 0
+    def __init__(self):
+        self.options = None
+        self.out_frame = np.array([])  # FIXME:
 
     def visualizer(self, result: GestureRecognizerResult, output_image: mp.Image):
         mp_hands = mp.solutions.hands
@@ -69,24 +75,23 @@ class BlossomRobot:
                                       mp_drawing_styles.get_default_hand_connections_style())
 
     def init_robot(self):
-        start.main(start.parse_args(sys.argv[1:]))
+        try:
+            start.imported_main(start.parse_args(sys.argv[1:]))
+        except:
+            print("robot probably not connected")
+            exit(1)
 
     def init_model(self, path, callback_func):
         path = os.path.join(os.getcwd(), path)
-        model.options = GestureRecognizerOptions(
+        self.options = GestureRecognizerOptions(
             base_options=BaseOptions(model_asset_path=path),
             running_mode=VisionRunningMode.LIVE_STREAM,
             result_callback=callback_func)
 
     def run_seq(self, seq):
-        self.timer -= 1
-        if self.timer > 0:
-            return
-        self.timer = 100
         for bot in start.robots:
-            # if not bot.seq_stop:
-            #     bot.seq_stop = threading.Event()
-            # bot.seq_stop.set()
+            if bot.seq_thread != None and bot.seq_thread.is_alive():
+                continue
             print("playing:", seq)
             bot.play_recording(seq, idler=False)
 

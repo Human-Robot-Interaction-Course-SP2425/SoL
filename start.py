@@ -562,6 +562,31 @@ def main(args):
     # start server
     start_server(args.host, args.port, args.browser_disable)
 
+def imported_main(args):
+    """
+    Does the same thing as main but does not start the cli or server
+    this is intended for if start is used as a module for another program
+    """
+    # get robots to start
+    global master_robot
+    global robots
+
+    # use first name as master
+    configs = RobotConfig().get_configs(args.names)
+    master_robot = safe_init_robot(args.names[0], configs[args.names[0]])
+    configs.pop(args.names[0])
+    # start robots
+    robots = [safe_init_robot(name, config)
+              for name, config in configs.items()]
+    robots.append(master_robot)
+
+    master_robot.reset_position()
+
+
+    # start CLI
+    # start_cli(master_robot)
+    # start server
+    # start_server(args.host, args.port, args.browser_disable)
 
 def safe_init_robot(name, config):
     """

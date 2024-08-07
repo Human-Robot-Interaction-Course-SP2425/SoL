@@ -11,13 +11,22 @@ import os
 from dotenv import load_dotenv
 
 
-def list_devices():
+def list_audio_devices():
+    """
+    list which mic index are available
+
+    can be used to find out what number to put in the mic_index
+    |
+    |
+    v
+    ChatBot(mic_index=5)
+    """
     for index, device in enumerate(PvRecorder.get_available_devices()):
         print(f"[{index}] {device}")
 
 
 class ChatBot:
-    def __init__(self, device_index):
+    def __init__(self, mic_index):
         self.preprompt = """
         Keep this response as a short and concise message as if you
         were talking to someone one to one.
@@ -28,14 +37,14 @@ class ChatBot:
         self.client = OpenAI(
             api_key=os.environ.get("OPENAI_API_KEY"),
         )
-        self.device_index = device_index
+        self.mic_index = mic_index
 
     def record_audio(self) -> str:
         """
         Returns:
             file name saved to
         """
-        recorder = PvRecorder(device_index=self.device_index, frame_length=512)
+        recorder = PvRecorder(device_index=self.mic_index, frame_length=512)
 
         # Flag to control recording state
         is_recording = False
@@ -105,7 +114,7 @@ class ChatBot:
         # print(transcription.text)
         return transcription.text
 
-    def prompt_gpt4o_mini(self, text, input_prompt, model="gpt-4o-mini") -> str:
+    def prompt_gpt(self, text, input_prompt, model="gpt-4o-mini") -> str:
         """
         Return:
             chatgpt string response
@@ -152,7 +161,7 @@ class ChatBot:
         transcribed_text = self.speach2text(res, speech2text_model)
         print(f"[transcribed text]: {transcribed_text}")
 
-        text_response = self.prompt_gpt4o_mini(transcribed_text, self.preprompt, chat_model)
+        text_response = self.prompt_gpt(transcribed_text, self.preprompt, chat_model)
         print(f"[{chat_model} response]: {text_response}")
 
         filename = self.text2speech(text_response, text2speech_model, text2speech_voice)
@@ -171,10 +180,11 @@ if __name__ == '__main__':
     # example usage
 
     # list all audio devices
-    list_devices()
+    list_audio_devices()
+    MIC_INDEX = 5 # run list_audio_devices() to choose which mic to use
 
     # input selected audio device index
-    cb = ChatBot(5)
+    cb = ChatBot(mic_index=MIC_INDEX)
 
     # run the chatbot
     cb.run_pipline()
