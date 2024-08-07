@@ -185,3 +185,16 @@ Available commands:
 ## [Blossom Arduino](blossom_arduino)
 
 Arduino Giga R1 implementation using the Dynamixel shield for blossom
+
+### Setup
+
+In the Arduino IDE click on: Tools -> Board -> Boards Manager...
+
+then type Arduino Giga in the search
+and download the one called Arduino Mbed OS GIGA Boards
+
+Next you need to download these libs:
+
+![arduino libs](./pics/arduino_deps.png)
+
+the entry point is in [bloosom.ino](blossom_arduino/arduino_src/bloosom/bloosom.ino)
