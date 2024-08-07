@@ -48,10 +48,63 @@ source blossom_venv/bin/activate
 ### General Setup
 
 
-_Ubuntu_: You may need to run 
+### Windows <img src="./pics/windows-logo.png" alt="drawing" width="30"/>
+Install python3: [Windows python installer link](https://www.python.org/downloads/release/python-31011/)
 
+scroll down to find the installer:
+![windows python install](./pics/windows_python_install.png)
+
+Type `cmd` in the windows search bar to open the command line:
+![cmd](./pics/cmd.png)
+
+go to where you cloned the repo:
+```bash
+cd blossom/project/root
 ```
-sudo apt-get install build-essential libssl-dev libffi-dev python3-dev`  
+
+install the required python pakages:
+```bash
+pip install -r requirements.txt
+```
+
+![cmd](./pics/windows_cmd.png)
+
+### Mac <img src="./pics/apple-logo_f8ff.png" alt="drawing" width="40"/>
+
+First install python3:
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+export PATH="/usr/local/opt/python/libexec/bin:$PATH"
+brew install python
+```
+
+Then install the required python pakages 
+```
+pip install -r requirements.txt --user
+```
+> _If this still doesn't work, you may have to append `sudo` before `pip`:_
+> ```
+> sudo pip install -r requirements.txt --user
+> ```
+_This may require you to run in `sudo` for subsequent steps._
+
+_It may take a while to install the dependencies; you may want to run `pip` verbose to make sure that it's still downloading: `pip install -rv requirements.txt`_
+
+_If you run into an error opening a port, try changing Blossom's permissions: `sudo chmod 777 /dev/ttyACM0`.
+Alternatively, rerun everything with admin privileges._
+
+_If you're using OSX and getting strange errors, try:_
+```
+sudo chown -R $USER /Library/Python/3.5
+```
+
+
+#### Linux 🐧
+First install python for your specific distro: (for ubuntu that is: `sudp apt install python3`)
+
+_Ubuntu_: You may need to run 
+```
+sudo apt-get install build-essential libssl-dev libffi-dev python3-dev  
 ``` 
 and
 ```
@@ -63,30 +116,24 @@ To install dependencies, run in the main `blossom` directory:
 pip install -r requirements.txt
 ```
 
-_Mac OSX: You may need to append `--user` to the `pip` command to circumvent installation issues:_
-```
-pip install -r requirements.txt --user
-```
 _If this still doesn't work, you may have to append `sudo` before `pip`:_
 ```
-sudo pip install -r requirements.txt --user
+sudo pip install -r requirements.txt 
 ```
 _This may require you to run in `sudo` for subsequent steps._
 
-_It may take a while to install the dependencies; you may want to run `pip` verbose to make sure that it's still downloading: `pip install -rv requirements.txt`_
+_It may take a while to install the dependencies;
+you may want to run `pip` verbose to make sure that it's still downloading: `pip install -rv requirements.txt`_
 
 _If you run into an error opening a port, try changing Blossom's permissions: `sudo chmod 777 /dev/ttyACM0`. Alternatively, rerun everything with admin privileges._
 
-_If you're using OSX and getting strange errors, try:_
-```
-sudo chown -R $USER /Library/Python/3.5
-```
 _Installation will take longer on a Raspberry Pi, and you may need additional dependencies:_
 ```
 sudo apt-get install xvfb
 ```
 
-_If you want to use the chatbot you will need to create a .env file with the API key:_
+### API key
+If you want to use the chatbot you will need to create a .env file with the API key:
 ```env
 OPENAI_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
@@ -147,6 +194,14 @@ a window should pop up running the gesture recogniser
   * chatGPT chatbot pipeline
   * to run: `python chatbot_pipeline.py` for a demo
   * use the function `list_audio_devices()` to get which mic you will use
+  * to run the whole pipeline:
+  ```python
+    # input selected audio device index
+    cb = ChatBot(mic_index=MIC_INDEX)
+
+    # run the chatbot
+    cb.run_pipline()
+  ```
   * it will generate speech.mp3 and test.wav everytime it is run. It is used
     to comunicate with the openAI API
 * motor_calib.py
@@ -155,7 +210,7 @@ a window should pop up running the gesture recogniser
   * class that holds all the robot code
 
 
-### CLI
+### Command Line Interface(CLI)
 To start the CLI, plug Blossom in and run
 ```bash
 python start.py 
