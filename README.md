@@ -2,11 +2,13 @@
 
 Blossom is an open-hardware, open-source tensile robot that you can handcraft and accessorize to your liking. You can read more about the project in the [ACM T-HRI Paper](https://doi.org/10.1145/3310356) and in [Evan Ackerman's IEEE Spectrum article](https://spectrum.ieee.org/automaton/robotics/home-robots/blossom-a-creative-handmade-approach-to-social-robotics-from-cornell-and-google).
 
-Here are two examples of Blossom robots:
+Here are some examples of Blossom robots:
+
+
+<img src="./pics/white_wall.jpg" alt="drawing" width="310"/>
+<img src="./pics/window.jpg" alt="drawing" width="250"/>
 
 <img src="http://guyhoffman.com/wp-content/uploads/2017/08/blossom-bunny-corner-e1502812175733-300x189.jpg" height="200"> <img src="http://guyhoffman.com/wp-content/uploads/2017/08/blossom-jellyfish-768x606.jpg" height="200" >
-
-**For any questions (assembly or software related), [please check/make public issues](https://github.com/hrc2/blossom-public/issues).**
 
 
 
@@ -92,8 +94,6 @@ _if you are taking a class at RHIT ask Dr. Berry for the API key_
 > **NOTE:** DO NOT SHARE THE API KEY OR PUSH THE `.env` FILE
 
 ## Building Blossom
-
-[3D print files]()
 
 To build your own Blossom, check out the [Build Guide](https://github.com/hrc2/blossom-public/wiki). The rest of this document will teach you how to set up the software to run the robot.
 
