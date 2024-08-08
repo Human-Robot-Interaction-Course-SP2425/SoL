@@ -23,6 +23,9 @@ def list_audio_devices():
     """
     for index, device in enumerate(PvRecorder.get_available_devices()):
         print(f"[{index}] {device}")
+    print("")
+
+    return len(PvRecorder.get_available_devices())
 
 
 class ChatBot:
@@ -185,8 +188,15 @@ if __name__ == '__main__':
     # example usage
 
     # list all audio devices
-    list_audio_devices()
-    MIC_INDEX = 6 # run list_audio_devices() to choose which mic to use
+    print("== pick you audio device ==\n")
+    num_dev = list_audio_devices()
+    while True:
+        num = input(f"choose from 0-{num_dev-1}: ")
+        if num.isnumeric() and int(num) in range(0, num_dev):
+            break
+        print("not a valid input :\ \n")
+
+    MIC_INDEX = int(num) # run list_audio_devices() to choose which mic to use
 
     # input selected audio device index
     cb = ChatBot(mic_index=MIC_INDEX)

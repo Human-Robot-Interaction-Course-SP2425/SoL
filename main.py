@@ -2,7 +2,7 @@ from utils import *
 from chatbot_pipline import *
 
 CAMERA_INDEX = 0  # run list_camera_ports() to choose which camera to use
-MIC_INDEX =   # run list_audio_devices() to choose which mic to use
+MIC_INDEX = 0  # run list_audio_devices() to choose which mic to use
 
 model_path = 'models/gesture_recognizer.task'
 

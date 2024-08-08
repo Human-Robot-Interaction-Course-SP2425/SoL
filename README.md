@@ -16,171 +16,59 @@ Here are some examples of Blossom robots:
 
 # Blossom How-To
 
-### [original CMU wiki](https://github.com/hrc2/blossom-public/wiki)
+#### if stuck: [original CMU wiki](https://github.com/hrc2/blossom-public/wiki)
 
-## Get repo
-In a terminal, clone this repo
-```
-git clone https://github.com/agmui/blossom-public.git
-```
-
-## Setup Software Dependencies
-
-Make sure you're using [Python `3`]
-To check, run `python -V` or `python3 -V`in the terminal to check the version. As of now, this codebase was tested and works on `Python 3.5.2` on Ubuntu 16.04 and Mac.
-_The following steps will assume `python -V` reports with version `>3.x.x`. If it reports `2.x.x` then replace `python` in the following steps with `python3`_
-
-Also ensure that [`pip3` is installed](https://pip.pypa.io/en/stable/installing/).
-To install:\
-Ubuntu: `sudo apt install python3-pip`\
-Mac: `curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py`, then `python3 get-pip.py`
-
-Virtual environments (`venv`) should be installed, but if not:\
-Ubuntu: `sudo apt-get install python3-venv`\
-Mac: `brew install python3-venv`
-
-Make a `venv` (virtual environment) in the top `blossom` directory and activate it:
-```
-python -m venv blossom_venv
-source blossom_venv/bin/activate
-```
-
-### General Setup
-
-
-### Windows <img src="./pics/windows-logo.png" alt="drawing" width="30"/>
-Install python3: [Windows python installer link](https://www.python.org/downloads/release/python-31011/)
-
-scroll down to find the installer:
-![windows python install](./pics/windows_python_install.png)
-
-Type `cmd` in the windows search bar to open the command line:
-![cmd](./pics/cmd.png)
-
-go to where you cloned the repo:
+## [Setup Guide](./Setup_Guide.md)
+for more experience users:
 ```bash
-cd blossom/project/root
-```
-
-install the required python pakages:
-```bash
-pip install -r requirements.txt
-```
-
-![cmd](./pics/windows_cmd.png)
-
-### Mac <img src="./pics/apple-logo_f8ff.png" alt="drawing" width="40"/>
-
-First install python3:
-```bash
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
-export PATH="/usr/local/opt/python/libexec/bin:$PATH"
-brew install python
-```
-
-Then install the required python pakages 
-```
-pip install -r requirements.txt --user
-```
-> _If this still doesn't work, you may have to append `sudo` before `pip`:_
-> ```
-> sudo pip install -r requirements.txt --user
-> ```
-_This may require you to run in `sudo` for subsequent steps._
-
-_It may take a while to install the dependencies; you may want to run `pip` verbose to make sure that it's still downloading: `pip install -rv requirements.txt`_
-
-_If you run into an error opening a port, try changing Blossom's permissions: `sudo chmod 777 /dev/ttyACM0`.
-Alternatively, rerun everything with admin privileges._
-
-_If you're using OSX and getting strange errors, try:_
-```
-sudo chown -R $USER /Library/Python/3.5
-```
-
-
-#### Linux 🐧
-First install python for your specific distro: (for ubuntu that is: `sudp apt install python3`)
-
-_Ubuntu_: You may need to run 
-```
-sudo apt-get install build-essential libssl-dev libffi-dev python3-dev  
-``` 
-and
-```
-pip install wheel
-```
-
-To install dependencies, run in the main `blossom` directory:
-```
-pip install -r requirements.txt
-```
-
-_If this still doesn't work, you may have to append `sudo` before `pip`:_
-```
-sudo pip install -r requirements.txt 
-```
-_This may require you to run in `sudo` for subsequent steps._
-
-_It may take a while to install the dependencies;
-you may want to run `pip` verbose to make sure that it's still downloading: `pip install -rv requirements.txt`_
-
-_If you run into an error opening a port, try changing Blossom's permissions: `sudo chmod 777 /dev/ttyACM0`. Alternatively, rerun everything with admin privileges._
-
-_Installation will take longer on a Raspberry Pi, and you may need additional dependencies:_
-```
-sudo apt-get install xvfb
+git clone https://github.com/agmui/blossom-public/tree/master
+pip install -r reqirments.txt
 ```
 
 ### API key
-If you want to use the chatbot you will need to create a .env file with the API key:
+
+To use the chatbot you will have to pay for a key from OpenAI
+
+you key will look like this:
 ```env
 OPENAI_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
+
 _if you are taking a class at RHIT ask Dr. Berry for the API key_
 > **NOTE:** DO NOT SHARE THE API KEY OR PUSH THE `.env` FILE
+
+create a file called `.env` and paste your key inside
 
 ## Building Blossom
 
 To build your own Blossom, check out the [Build Guide](https://github.com/hrc2/blossom-public/wiki). The rest of this document will teach you how to set up the software to run the robot.
 
 > **Note**
-> You need to have the basic software set up as listed above to build Blossom_
+> You need to have the basic software set up as listed above to build Blossom
 
 
 ## Running Blossom 
 
 ### Gesture recogniser
 
-first run 
-```python
-from utils import list_camera_ports
-from chatbot_pipline import list_audio_devices
-
-list_camera_ports()
-list_audio_devices()
-```
-to get the camera and mic you want to use for the gesture recogniser and chatbot
-
-then set:
-```python
-CAMERA_INDEX = 
-MIC_INDEX =  
-```
-in `main.py` to what you choose
-
-
-then run:
+run:
 ```bash
 python main.py
 ```
-> _Error:_ could not open port.
+> _Common Error on Mac:_ `could not open port.`
 > 
 > You may need to run `sudo chmod 777 <the name of the port>.`
 >
 > Ex: `sudo chmod 777 /dev/ttyACM0`
 
 a window should pop up running the gesture recogniser
+
+for the chatbot demo run
+```bash
+python chatbot_pipeline.py
+```
+then when asked input your mic, for me it was 5:
+![mic_pic](pics/mic_pic.png)
 
 #### Project files
 * main.py
@@ -240,6 +128,9 @@ Available commands:
 ## [Blossom Arduino](blossom_arduino)
 
 Arduino Giga R1 implementation using the Dynamixel shield for blossom
+
+> Note: this project is not fully finished so there are some missing parts to
+> the arduino implementation
 
 ### Setup
 
