@@ -18,26 +18,30 @@ Here are some examples of Blossom robots:
 
 #### if stuck: [original CMU wiki](https://github.com/hrc2/blossom-public/wiki)
 
-## [Setup Guide](./Setup_Guide.md)
+## [Setup Guide (click here)](./Setup_Guide.md)
 for more experience users:
 ```bash
 git clone https://github.com/agmui/blossom-public/tree/master
 pip install -r reqirments.txt
 ```
 
-### API key
+### Chat GPT integration 
 
-To use the chatbot you will have to pay for a key from OpenAI
-
-you key will look like this:
+For the Chat GPT chatbot you will have to pay for a key from OpenAI.  
+Your key will look like this:
 ```env
 OPENAI_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
 
 _if you are taking a class at RHIT ask Dr. Berry for the API key_
-> **NOTE:** DO NOT SHARE THE API KEY OR PUSH THE `.env` FILE
 
-create a file called `.env` and paste your key inside
+Create a file called `.env` and paste your key inside:
+
+![env file setup](./pics/env_file_setup.png)
+
+> 🔴IMPORTANT❗🔴 DO NOT SHARE THE API KEY OR PUSH THE `.env` FILE TO GITHUB
+
+---
 
 ## Building Blossom
 
@@ -46,12 +50,12 @@ To build your own Blossom, check out the [Build Guide](https://github.com/hrc2/b
 > **Note**
 > You need to have the basic software set up as listed above to build Blossom
 
+---
 
 ## Running Blossom 
 
 ### Gesture recogniser
 
-run:
 ```bash
 python main.py
 ```
@@ -68,6 +72,7 @@ for the chatbot demo run
 python chatbot_pipeline.py
 ```
 then when asked input your mic, for me it was 5:
+
 ![mic_pic](pics/mic_pic.png)
 
 #### Project files
@@ -75,6 +80,9 @@ then when asked input your mic, for me it was 5:
   * the entry point to the gesture recogniser program
   * the function `on_detection()` is where most of you code should go
     it gets called anytime a gesture gets recognised
+  * the result of the detection is placed in a variable called `result` 
+  the format is linked here: [result format](https://ai.google.dev/edge/mediapipe/solutions/vision/gesture_recognizer/python)
+  * as an example to get the name of the gesture: `gesture_name = result.gestures[0][0].category_name`
 * utils.py
   * helpful functions for starting the robot and gesture recogniser
   * use the function `list_camera_ports()` to get which camera port OpenCV will use
@@ -103,11 +111,20 @@ To start the CLI, plug Blossom in and run
 ```bash
 python start.py 
 ```
-_Error:_ could not open port. You may need to run `sudo chmod 777 <the name of the port>.` 
+
+<details>
+<summary>
+
+Common Errors: `could not open port.`
+</summary>
+
+You may need to run `sudo chmod 777 [the name of the port]`
+
 Ex: `sudo chmod 777 /dev/ttyACM0`
+</details>
 
 
-Additional flags:
+#### Additional flags:
 ```
 -b do not start up Web UI
 -p denote the port
@@ -119,11 +136,13 @@ For example, to make Blossom nod with the `yes` sequence, type:
 
 `s` -> Enter -> `yes`
 
-Available commands:
+#### Available commands:
 - `l`: list available sequences
 - `s`: perform a sequence, followed by the Enter key and the sequence name
 - To perform an idler (looped gesture), enter two sequence names separated by `=`, e.g. `s` -> Enter -> `yes=no` (play `yes` then loop `no` indefinitely until another sequence is played).  
 - `q`: quit
+
+---
 
 ## [Blossom Arduino](blossom_arduino)
 
