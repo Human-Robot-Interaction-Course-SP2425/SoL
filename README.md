@@ -5,7 +5,7 @@ Blossom is an open-hardware, open-source tensile robot that you can handcraft an
 Here are some examples of Blossom robots:
 
 
-<img src="./pics/white_wall.jpg" alt="drawing" width="310"/> <img src="./pics/window.jpg" alt="drawing" width="250"/>
+<img src="./pics/white_wall.jpg" alt="drawing" height="300"/> <img src="./pics/window.jpg" alt="drawing" height="300"/>
 
 <img src="http://guyhoffman.com/wp-content/uploads/2017/08/blossom-bunny-corner-e1502812175733-300x189.jpg" height="200"> <img src="http://guyhoffman.com/wp-content/uploads/2017/08/blossom-jellyfish-768x606.jpg" height="200" >
 
@@ -45,7 +45,7 @@ pip install -r reqirments.txt
 
 #### 3. connect the cable to the robot
 
-<img src="./pics/connect_to_blossom.png" alt="connect to blossom" width="200"/> <img src="./pics/uart_and_U2D2_and_blossom.png" alt="uart and U2D2 and blossom" width="400"/>
+<img src="./pics/connect_to_blossom.png" alt="connect to blossom" width="225"/> <img src="./pics/uart_and_U2D2_and_blossom.png" alt="uart and U2D2 and blossom" width="400"/>
 
 #### 4. connect both the Uart and U2D2 cable to your laptop
 <img src="./pics/everything_connected.png" alt="everything connected" width="300"/>
