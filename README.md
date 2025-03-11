@@ -14,16 +14,51 @@ Here are some examples of Blossom robots:
 
 ----
 
-# Blossom How-To
+# Blossom setup guide:
 
 #### if stuck: [original CMU wiki](https://github.com/hrc2/blossom-public/wiki)
 
 ## [Setup Guide (click here)](./Setup_Guide.md)
-for more experience users:
+
+If you already have git and python3.10 installed just run these two commands:
+
 ```bash
 git clone https://github.com/agmui/blossom-public/tree/master
 pip install -r reqirments.txt
 ```
+
+### Wiring Guide:
+#### 1. cables
+<table>
+ <tr>
+    <td><b style="font-size:20px"> U2D2 Cable: </b></td>
+    <td><b style="font-size:20px">Uart Cable:</b></td>
+ </tr>
+ <tr>
+    <td> <img src="./pics/U2D2.png" alt="U2D2" width="300"/> </td>
+    <td> <img src="./pics/uart_cable.png" alt="uart cable" width="300"/> </td>
+ </tr>
+</table>
+
+#### 2. connect the red pin of the Uart with the red pin of the U2D2 and same with the black pin:
+
+<img src="./pics/uart_and_U2D2.png" alt="uart and U2D2" width="300"/>
+
+#### 3. connect the cable to the robot
+
+<img src="./pics/connect_to_blossom.png" alt="connect to blossom" width="200"/>
+
+<img src="./pics/uart_and_U2D2_and_blossom.png" alt="uart and U2D2 and blossom" width="400"/>
+
+#### 4. connect both the Uart and U2D2 cable to your laptop
+<img src="./pics/everything_connected.png" alt="everything connected" width="300"/>
+
+Once the robot is plugged into your laptop type in the terminal:
+```bash
+python3 simple_test.py
+```
+
+The robot should now be moving
 
 ### Chat GPT integration 
 
@@ -39,27 +74,68 @@ Create a file called `.env` and paste your key inside:
 
 ![env file setup](./pics/env_file_setup.png)
 
-> 🔴IMPORTANT❗🔴 DO NOT SHARE THE API KEY OR PUSH THE `.env` FILE TO GITHUB
+### 🔴IMPORTANT❗🔴 DO NOT SHARE THE API KEY OR PUSH THE `.env` FILE TO GITHUB
 
 ---
 
-## Building Blossom
+## Blossom Build Guide
 
 To build your own Blossom, check out the [Build Guide](https://github.com/hrc2/blossom-public/wiki). The rest of this document will teach you how to set up the software to run the robot.
-
-> **Note**
-> You need to have the basic software set up as listed above to build Blossom
 
 ---
 
 ## Running Blossom 
 
+TODO: [Interfacing guide](./Interfacing_Guide.md)
+
+### Command Line Interface(CLI)
+
+```bash
+usage: start.py [-h] [--names NAMES [NAMES ...]] [--port PORT] [--host HOST] [--browser-disable] [--list-robots]
+
+options:
+  -h, --help            show this help message and exit
+  --names NAMES [NAMES ...], -n NAMES [NAMES ...]
+                        Name of the robot.
+  --port PORT, -p PORT  Port to start server on.
+  --host HOST, -i HOST  IP address of webserver
+  --browser-disable, -b
+                        prevent a browser window from opening with the blossom UI
+  --list-robots, -l     list all robot names
+```
+
+To start the CLI, plug Blossom in and run
+```bash
+python start.py 
+```
+
+To make Blossom nod with the `yes` type:
+
+`s` -> Enter -> `yes`
+
+<details>
+<summary>
+
+Common Errors: `could not open port.`
+</summary>
+
+You may need to run `sudo chmod 777 [the name of the port]`
+
+Ex: `sudo chmod 777 /dev/ttyACM0`
+</details>
+
+
+_Linux may default to a loopback IP (`127.0.1.1`); in this case you **must** specify the IP address using `-i`._
+
+
 ### Gesture recogniser
+
+*used Google [MediaPipe](https://ai.google.dev/edge/mediapipe/solutions/vision/gesture_recognizer) for model*
 
 ```bash
 python main.py
 ```
-> _Common Error on Mac:_ `could not open port.`
+> _Troubleshooting Error on Mac:_ `could not open port.`
 > 
 > You may need to run `sudo chmod 777 <the name of the port>.`
 >
@@ -67,7 +143,13 @@ python main.py
 
 a window should pop up running the gesture recogniser
 
-for the chatbot demo run
+press q to close the window
+
+![gesture recogniser](./pics/gesture_recogniser_demo.png)
+
+
+
+### Chatbot demo run
 ```bash
 python chatbot_pipeline.py
 ```
@@ -75,18 +157,20 @@ then when asked input your mic, for me it was 5:
 
 ![mic_pic](pics/mic_pic.png)
 
-#### Project files
-* main.py
+## Project files:
+**main.py:**
   * the entry point to the gesture recogniser program
   * the function `on_detection()` is where most of you code should go
     it gets called anytime a gesture gets recognised
   * the result of the detection is placed in a variable called `result` 
   the format is linked here: [result format](https://ai.google.dev/edge/mediapipe/solutions/vision/gesture_recognizer/python)
   * as an example to get the name of the gesture: `gesture_name = result.gestures[0][0].category_name`
-* utils.py
+ 
+**utils.py:**
   * helpful functions for starting the robot and gesture recogniser
   * use the function `list_camera_ports()` to get which camera port OpenCV will use
-* chatbot_pipline.py
+
+**chatbot_pipline.py:**
   * chatGPT chatbot pipeline
   * to run: `python chatbot_pipeline.py` for a demo
   * use the function `list_audio_devices()` to get which mic you will use
@@ -105,42 +189,6 @@ then when asked input your mic, for me it was 5:
 * start.py
   * class that holds all the robot code
 
-
-### Command Line Interface(CLI)
-To start the CLI, plug Blossom in and run
-```bash
-python start.py 
-```
-
-<details>
-<summary>
-
-Common Errors: `could not open port.`
-</summary>
-
-You may need to run `sudo chmod 777 [the name of the port]`
-
-Ex: `sudo chmod 777 /dev/ttyACM0`
-</details>
-
-
-#### Additional flags:
-```
--b do not start up Web UI
--p denote the port
--i specify an IP address (won't work with localhost)
-```
-_Linux may default to a loopback IP (`127.0.1.1`); in this case you **must** specify the IP address using `-i`._
-
-For example, to make Blossom nod with the `yes` sequence, type: 
-
-`s` -> Enter -> `yes`
-
-#### Available commands:
-- `l`: list available sequences
-- `s`: perform a sequence, followed by the Enter key and the sequence name
-- To perform an idler (looped gesture), enter two sequence names separated by `=`, e.g. `s` -> Enter -> `yes=no` (play `yes` then loop `no` indefinitely until another sequence is played).  
-- `q`: quit
 
 ---
 

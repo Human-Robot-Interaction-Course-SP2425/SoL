@@ -1,58 +1,88 @@
-# Install Guide
+# Setup Guide
+
+[Windows](#windows-img-srcpicswindows-logopng-altdrawing-width30)  
+[Mac](#mac-img-srcpicsapple-logo_f8ffpng-altdrawing-width40)  
+[Linux](#linux-)  
 
 ## Windows <img src="./pics/windows-logo.png" alt="drawing" width="30"/>
 
 The Window install guide assumes you have taken the RHIT class but this guide should
 work for anyone
 
-### 1. Install python3.10:
-![windows python install](./pics/windows_python_install.png)
-scroll down to find the installer:
+### 1. Downloading python3.10 and pip
+
+if you already have python you can skip this step
+
+Install python3.10 for your Operating System:
 [Windows python installer link](https://www.python.org/downloads/release/python-31011/)
 
-### 2. Download blossom code
+scroll down to find the installer:
+![windows python install](./pics/windows_python_install.png)
+
+go thought the installer process
+### 🔴IMPORTANT❗🔴 remember to click add to path at the end:
+
+TODO: add pic
+
+### 2. Download blossom code from GitHub
+
+If you have git run:
+```bash
+git clone https://github.com/agmui/blossom-public/tree/master
+```
+
+Otherwise, download the code by clicking `Download ZIP`:
+
 ![download zip](pics/download_zip.png)
 
 unzip it to a known location
 
-### 3. Open PyCharm  
+### 3. Download VScode
 
+Skip this step if you already have an working IDE
+
+Install [VScode](https://code.visualstudio.com/download)
+and once inside VScode open the `blossom-public` folder you just unzipped with `File` -> `Open Folder`
+
+![open folder](./pics/vscode_open_folder.png)
+
+<details> <summary>PyCharm Setup (if you want to use PyCharm instead of VScode)</summary>
 on the top left click File->Open
 
 and click the folder you just unzipped and hit ok
-
-Then click on terminal on the bottem left and type in this
-
-<details open>
-<summary>what if I dont have pycharm?</summary>
-<br>
-![cmd](./pics/cmd.png)
-Type `cmd` in the windows search bar to open the command line:
-
-go to where you unziped the repo:
-```bash
-cd <unziped folder location>
-```
 </details>
 
+### 4. Installing dependencies with pip
+
+open the terminal, for VScode click `View` -> `Terminal`
+![vscode terminal](./pics/vscode_terminal.png)
+
+type this into the terminal and hit enter this will install all dependencies:
+
 ```bash
-pip install -r requirements.txt
+pip install -r reqirments.txt
 ```
 
-![cmd](./pics/windows_cmd.png)
+[//]: # (If you get an error saying that pip is not installed)
 
-If there were no errors congratulations you can go back to the main guide
+
+If there were no errors congratulations!  
+The wiring guide and ChatGPT integration will be explained in the main guide
 
 ## Mac <img src="./pics/apple-logo_f8ff.png" alt="drawing" width="40"/>
 
-First install python3:
+### 1. Install python3:
+
+open a terminal and type:
+
 ```bash
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 export PATH="/usr/local/opt/python/libexec/bin:$PATH"
 brew install python
 ```
 
-Then install the required python pakages
+### 2. Installing dependencies with pip
+
 ```
 pip install -r requirements.txt --user
 ```
