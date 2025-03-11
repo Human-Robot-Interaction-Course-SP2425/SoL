@@ -1,8 +1,8 @@
 # Setup Guide
 
-[Windows](#windows-img-srcpicswindows-logopng-altdrawing-width30)  
-[Mac](#mac-img-srcpicsapple-logo_f8ffpng-altdrawing-width40)  
-[Linux](#linux-)  
+* **[Windows](#windows-img-srcpicswindows-logopng-altdrawing-width30)**
+* **[Mac](#mac-img-srcpicsapple-logo_f8ffpng-altdrawing-width40)**
+* **[Linux](#linux-)**
 
 ## Windows <img src="./pics/windows-logo.png" alt="drawing" width="30"/>
 
@@ -11,7 +11,7 @@ work for anyone
 
 ### 1. Downloading python3.10 and pip
 
-if you already have python you can skip this step
+> if you already have python you can skip this step
 
 Install python3.10 for your Operating System:
 [Windows python installer link](https://www.python.org/downloads/release/python-31011/)
@@ -26,10 +26,10 @@ TODO: add pic
 
 ### 2. Download blossom code from GitHub
 
-If you have git run:
-```bash
-git clone https://github.com/agmui/blossom-public/tree/master
-```
+> If you already have git run:
+> ```bash
+> git clone https://github.com/agmui/blossom-public/tree/master
+> ```
 
 Otherwise, download the code by clicking `Download ZIP`:
 
@@ -55,6 +55,7 @@ and click the folder you just unzipped and hit ok
 ### 4. Installing dependencies with pip
 
 open the terminal, for VScode click `View` -> `Terminal`
+
 ![vscode terminal](./pics/vscode_terminal.png)
 
 type this into the terminal and hit enter this will install all dependencies:
