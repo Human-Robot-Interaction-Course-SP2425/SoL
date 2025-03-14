@@ -22,13 +22,13 @@ scroll down to find the installer:
 go thought the installer process
 ### 🔴IMPORTANT❗🔴 remember to click add to path at the end:
 
-TODO: add pic
+![python_add_to_PATH](./pics/python_add_path.png)
 
 ### 2. Download blossom code from GitHub
 
 > If you already have git run:
 > ```bash
-> git clone https://github.com/agmui/blossom-public/tree/master
+> git clone https://github.com/agmui/blossom-public.git
 > ```
 
 Otherwise, download the code by clicking `Download ZIP`:
@@ -61,8 +61,10 @@ open the terminal, for VScode click `View` -> `Terminal`
 type this into the terminal and hit enter this will install all dependencies:
 
 ```bash
-pip install -r reqirments.txt
+pip install -r requirements.txt
 ```
+
+When doing this there maybe warnings that can be ignored
 
 [//]: # (If you get an error saying that pip is not installed)
 
