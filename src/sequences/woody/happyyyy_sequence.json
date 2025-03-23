@@ -1,0 +1,48 @@
+{
+  "animation": "happyyyy", 
+  "frame_list": [
+    {
+      "positions": [
+        {
+          "dof": "tower_1", 
+          "pos": 2
+        }, 
+        {
+          "dof": "tower_3", 
+          "pos": 2
+        }, 
+        {
+          "dof": "tower_2", 
+          "pos": 2
+        }, 
+        {
+          "dof": "base", 
+          "pos": 2
+        }
+      ], 
+      "millis": 0.0
+    }, 
+    {
+      "positions": [
+        {
+          "dof": "tower_1", 
+          "pos": 6
+        }, 
+        {
+          "dof": "tower_3", 
+          "pos": 6
+        }, 
+        {
+          "dof": "tower_2", 
+          "pos": 6
+        }, 
+        {
+          "dof": "base", 
+          "pos": 6
+        }
+      ], 
+      "millis": 1000.0
+    }
+  ], 
+  "label": "none"
+}
