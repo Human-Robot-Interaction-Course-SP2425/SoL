@@ -1,23 +1,12 @@
 from time import sleep
-from utils import *
+from utilities import *
 import keyboard
 
 init_robot()
-
-# run_seq("reset")
-# sleep(1)
-# run_seq("yes")
-# sleep(5)
-# run_seq("happy")
-# sleep(5)
-# run_seq("sad")
-# sleep(10)
-# run_seq("happyyyy")
-# sleep(10)
-
-
+# Runs a while-loop so that the robot continues to receive keyboard input
 while True:
     try:
+        # Event is decided by reading what event is occuring from the keyboard library installed
         event = keyboard.read_event()
         if event.event_type == keyboard.KEY_DOWN:  
             if event.name == 'left':
@@ -44,5 +33,18 @@ while True:
                 print("space")
                 run_seq("hungry")
                 sleep(1)
+    # If an unrecognized interruption occurs, the loop breaks
     except KeyboardInterrupt:
         break
+
+
+# run_seq("reset")
+# sleep(1)
+# run_seq("yes")
+# sleep(5)
+# run_seq("happy")
+# sleep(5)
+# run_seq("sad")
+# sleep(10)
+# run_seq("happyyyy")
+# sleep(10)

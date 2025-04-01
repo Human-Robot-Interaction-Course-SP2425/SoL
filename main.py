@@ -11,7 +11,8 @@ hand_to_seq = {
     "Closed_Fist": "sad",
     "Pointing_Up": "no",
     "Thumb_Up": "happy",
-    "Thumb_Down": "fear"
+    "Thumb_Down": "fear",
+    "Victory": "hungry"
 }
 
 
