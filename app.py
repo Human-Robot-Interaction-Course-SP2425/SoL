@@ -24,7 +24,7 @@ hand_to_seq = {
     "Close": "sad",
     "Pointer": "no",
     "OK": "happy",
-    "Peace": "fear",
+    "Peace": "hungry",
     "Love": "happy_dance"
 }
 
@@ -52,7 +52,7 @@ def get_args():
 
 
 def main():
-    # init_robot()----------------------------------------------------------------------------
+    # init_robot()
     # Argument parsing #################################################################
     args = get_args()
 
