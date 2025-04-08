@@ -1,6 +1,10 @@
 from time import sleep
 from utilities import *
 import keyboard
+# import os
+# os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
+
+# import tensorflow as tf
 
 init_robot()
 # Runs a while-loop so that the robot continues to receive keyboard input

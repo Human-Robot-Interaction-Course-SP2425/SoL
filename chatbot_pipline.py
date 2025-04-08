@@ -197,17 +197,29 @@ if __name__ == '__main__':
         print("not a valid input :\ \n")
 
     MIC_INDEX = int(num) # run list_audio_devices() to choose which mic to use
-
     # input selected audio device index
     cb = ChatBot(mic_index=MIC_INDEX)
+    # Run the chatbot until user exists
+    try:
+        while True:
+            #run the chat bot again
+            transcribed_text, response, old_convo = cb.run_pipline()
 
-    # run the chatbot
-    cb.run_pipline()
+    # If interruptted, break
+    except KeyboardInterrupt:
+        print("Program interrupted by user.")
+        # maybe other cleanups??
 
-    # run the chat bot again
-    transcribed_text, response, old_convo = cb.run_pipline()
+    finally:
+        print("Exiting program")
 
-    # print result
-    print("\n---convo log:---")
-    print(transcribed_text, response, old_convo)
+    # # run the chatbot
+    # cb.run_pipline()
+
+    # # run the chat bot again
+    # transcribed_text, response, old_convo = cb.run_pipline()
+
+    # # print result
+    # print("\n---convo log:---")
+    # print(transcribed_text, response, old_convo)
 
