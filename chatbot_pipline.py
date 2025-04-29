@@ -9,6 +9,10 @@ import time
 from pygame import mixer
 import os
 from dotenv import load_dotenv
+from transformers import pipeline
+from utilities import *
+from time import sleep
+
 
 
 def list_audio_devices():
@@ -57,7 +61,7 @@ class ChatBot:
         def on_press(key):
             nonlocal is_recording, audio
             if key == keyboard.Key.space and not is_recording:
-                print("Recording...")
+                # print("Recording...")
                 recorder.start()
                 is_recording = True
                 audio = []
@@ -93,7 +97,7 @@ class ChatBot:
         )
         listener.start()
         try:
-            print("Press and hold the space bar to record.")
+            # print("Press and hold the space bar to record.")
             record_audio()
         except KeyboardInterrupt:
             print("Exiting...")
@@ -159,6 +163,29 @@ class ChatBot:
 
 
         return "speech.mp3"
+    
+    def robot_movement(self, emotion):
+        if emotion == "neutral":
+            run_seq("yes")
+            sleep(1)
+        elif emotion == "fear":
+            run_seq("fear")
+            sleep(1)
+        elif emotion == "anger":
+            run_seq("anger")
+            sleep(1)
+        elif emotion == "disgust":
+            run_seq("hungry")
+            sleep(1)
+        elif emotion == "joy":
+            run_seq("happy")
+            sleep(1)
+        elif emotion == "sadness":
+            run_seq("sad")
+            sleep(1)
+        elif emotion == "surprise":
+            run_seq("fear_surprise")
+            sleep(1)
 
     def run_pipline(self, speech2text_model="whisper-1", chat_model="gpt-4o-mini", text2speech_model="tts-1",
                     text2speech_voice="alloy"):
@@ -171,6 +198,18 @@ class ChatBot:
 
         text_response = self.prompt_gpt(transcribed_text, self.preprompt, chat_model)
         print(f"[{chat_model} response]: {text_response}")
+
+        # Emotion Prediction
+        result = emotion_classifier(text_response)[0]  # top prediction
+        print(f"Emotion detected: {result['label']}")
+
+        # Robot movement
+        self.robot_movement(result['label'])
+        # if result['label'] == "neutral":
+        #     run_seq("left")
+        # elif result['label'] == "fear":
+        #     run_seq("right")
+
 
         filename = self.text2speech(text_response, text2speech_model, text2speech_voice)
         # print(f"output file {filename}")
@@ -200,6 +239,11 @@ if __name__ == '__main__':
     # input selected audio device index
     cb = ChatBot(mic_index=MIC_INDEX)
     # Run the chatbot until user exists
+
+    # Loading sentiment analysis model
+    emotion_classifier = pipeline("text-classification", model="j-hartmann/emotion-english-distilroberta-base", return_all_scores=False)
+    init_robot()
+
     try:
         while True:
             #run the chat bot again
